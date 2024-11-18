@@ -1,0 +1,22 @@
+---
+import LinkToRecord from '@components/LinkToRecord/LinkToRecord.astro';
+import type { RecordRoute } from '@lib/routing';
+
+type Node = {
+  meta?: {
+    id: string;
+    value: string;
+  }[];
+};
+
+export type Props = {
+  node?: Node;
+  link: RecordRoute;
+};
+
+const { link: record, node, ...props } = Astro.props;
+
+const openInNewTab = Boolean(node?.meta?.find(entry => entry.id === 'target' && entry.value === '_blank'));
+---
+
+<LinkToRecord {record} {openInNewTab} {...props}><slot>{record.title}</slot></LinkToRecord>
